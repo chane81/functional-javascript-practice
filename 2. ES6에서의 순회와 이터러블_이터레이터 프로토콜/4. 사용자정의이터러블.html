@@ -1,0 +1,32 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  /* 사용자정의 이터러블 */
+
+  const iterable = {
+    [Symbol.iterator]() {
+      let i = 3;
+
+      // 웰폼드 이터레이터는 자기자신도 Symbol.iterator 로 리턴을 한다.
+      return {
+        next() {
+          return i === 0 ? { done: true } : { value: i--, done: false };
+        },
+        // 자기자신을 Symbol.iterator 로 리턴하게 함
+        [Symbol.iterator]() {
+          return this;
+        }
+      };
+    }
+  };
+
+  let iterator = iterable[Symbol.iterator]();
+  log(iterator.next());
+  log(iterator.next());
+
+  // 위에서 자기자신(this)도 Symbol.iterator 로 리턴하게 하였기 때문에 next()로 진행후에도
+  // for of 문 으로 순회가 가능한 것이다.
+  for (const a of iterator) log(a);
+</script>

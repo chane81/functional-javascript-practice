@@ -1,0 +1,53 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  /* Array */
+  line('[Array]');
+
+  const arr = [1, 2, 3];
+
+  const iter1 = arr[Symbol.iterator]();
+  // {value: 1, done: false}
+  log(iter1.next());
+
+  // {value: 2, done: false}
+  // log(iter1.next());
+
+  // // {value: 3, done: false}
+  // log(iter1.next());
+
+  // // {value: undefined, done: true}
+  // log(iter1.next());
+
+  for (const a of iter1) log(a);
+</script>
+<script>
+  /* Set */
+  line('[Set]');
+  const set = new Set([1, 2, 3]);
+  for (const a of set) log(a);
+</script>
+<script>
+  /* Map */
+  line('[Map]');
+  const map = new Map([['a', 1], ['b', 2], ['c', 3]]);
+
+  const iter2 = map[Symbol.iterator]();
+  for (const a of map) log(a);
+
+  const mapKeys = map.keys();
+  const mapValues = map.values();
+  const mapEntries = map.entries();
+
+  for (const a of mapKeys) log(a);
+  for (const a of mapValues) log(a);
+  for (const a of mapEntries) log(a);
+
+  /* 이터레이터로 된 map 은 다시 이터레이터로 된 values 값을 가진다 */
+  line('[Map values iterators]');
+  const mapValuesIter = map.values()[Symbol.iterator]();
+  log(mapValuesIter.next());
+  log(mapValuesIter.next());
+</script>

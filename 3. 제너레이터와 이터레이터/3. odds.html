@@ -1,0 +1,37 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  /* odds(홀수) */
+
+  // 숫자증가 제너레이터
+  function* infinity(i = 0) {
+    while (true) yield i++;
+  }
+
+  // 제한수치에서 멈추는 제너레이터
+  function* limit(l, iter) {
+    for (const a of iter) {
+      yield a;
+      if (a === l) return;
+    }
+  }
+
+  // 홀수 생성 제너레이터
+  function* odds(l) {
+    for (const a of limit(l, infinity(1))) {
+      if (a % 2) yield a;
+      //if (a === l) return;
+    }
+  }
+
+  let iter2 = odds(10);
+  log(iter2.next());
+  log(iter2.next());
+  log(iter2.next());
+  log(iter2.next());
+  log(iter2.next());
+  log(iter2.next());
+  log(iter2.next());
+</script>

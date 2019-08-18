@@ -1,0 +1,27 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  /* ES6 이전의 기존 방식 */
+  const list = [1, 2, 3];
+  for (var i = 0; i < list.length; i++) {
+    log(list[i]);
+  }
+
+  const str = 'abc';
+  for (var i = 0; i < list.length; i++) {
+    log(str[i]);
+  }
+
+  line();
+
+  /* ES6 이후의 방식 */
+  for (const a of list) {
+    log(a);
+  }
+
+  for (const a of str) {
+    log(a);
+  }
+</script>

@@ -1,0 +1,55 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  const products = [
+    { name: '반팔티', price: 15000 },
+    { name: '긴팔티', price: 20000 },
+    { name: '핸드폰케이스', price: 10000 },
+    { name: '후드티', price: 35000 },
+    { name: '바지', price: 50000 }
+  ];
+</script>
+
+<script>
+  /* reduce 미사용 */
+  const nums = [1, 2, 3, 4];
+  let total = 0;
+
+  for (const n of nums) {
+    total = total + n;
+  }
+
+  log(total);
+
+  /* reduce 사용 */
+  const reduce = (f, acc, iter) => {
+    if (!iter) {
+      iter = acc[Symbol.iterator]();
+      acc = iter.next().value;
+    }
+
+    for (const a of iter) {
+      acc = f(acc, a);
+    }
+
+    return acc;
+  };
+
+  const add = (a, b) => a + b;
+
+  // 15 - 인자 3개로 받을 때
+  log(reduce(add, 0, [1, 2, 3, 4, 5]));
+
+  // 15 - 인자 2개로 받을 때
+  log(reduce(add, [1, 2, 3, 4, 5]));
+
+  // 15 - reduce 안쓸경우
+  log(add(add(add(add(add(0, 1), 2), 3), 4), 5));
+
+  // 상품금액 sum
+  log(
+    reduce((total_price, product) => total_price + product.price, 0, products)
+  );
+</script>

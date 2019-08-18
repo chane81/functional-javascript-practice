@@ -1,0 +1,61 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  const products = [
+    { name: '반팔티', price: 15000 },
+    { name: '긴팔티', price: 20000 },
+    { name: '핸드폰케이스', price: 10000 },
+    { name: '후드티', price: 35000 },
+    { name: '바지', price: 50000 }
+  ];
+</script>
+
+<script>
+  /* filter 없이 사용 */
+
+  line('[filter 없이 사용]');
+  let under20000 = [];
+  for (const p of products) {
+    if (p.price < 20000) under20000.push(p);
+  }
+
+  log(...under20000);
+
+  let over20000 = [];
+  for (const p of products) {
+    if (p.price >= 20000) over20000.push(p);
+  }
+
+  log(...over20000);
+
+  /* filter 사용 */
+
+  line('[filter 사용]');
+  const filter = (f, iter) => {
+    let res = [];
+    for (const a of iter) {
+      if (f(a)) res.push(a);
+    }
+
+    return res;
+  };
+
+  log(...filter(p => p.price < 20000, products));
+  log(...filter(p => p.price >= 20000, products));
+  log(filter(n => n % 2, [1, 2, 3, 4]));
+
+  log(
+    filter(
+      n => n % 2,
+      (function*() {
+        yield 1;
+        yield 2;
+        yield 3;
+        yield 4;
+        yield 5;
+      })()
+    )
+  );
+</script>

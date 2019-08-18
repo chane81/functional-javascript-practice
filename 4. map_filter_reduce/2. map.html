@@ -1,0 +1,41 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  const products = [
+    { name: '반팔티', price: 15000 },
+    { name: '긴팔티', price: 20000 },
+    { name: '핸드폰케이스', price: 30000 },
+    { name: '후드티', price: 35000 },
+    { name: '바지', price: 50000 }
+  ];
+</script>
+
+<script>
+  /* map */
+  const map = (f, iter) => {
+    let res = [];
+    for (const p of iter) {
+      res.push(f(p));
+    }
+
+    return res;
+  };
+
+  log(map(p => p.name, products));
+  log(map(p => p.price, products));
+</script>
+
+<script>
+  /* 이터러블 프로토콜을 따른 map의 다형성 */
+  log(map(el => el.nodeName, document.querySelectorAll('*')));
+
+  function* gen() {
+    yield 2;
+    yield 3;
+    yield 4;
+  }
+
+  log(map(a => a * a, gen()));
+</script>

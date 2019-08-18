@@ -1,0 +1,32 @@
+<script>
+  const log = console.log;
+  const line = arg => console.log(arg + '===========================');
+</script>
+<script>
+  /* 제너레이터 */
+
+  function* gen() {
+    yield 1;
+    yield 2;
+    yield 3;
+    return 100;
+  }
+
+  let iter = gen();
+  log(iter[Symbol.iterator]() === iter);
+
+  // {value: 1, done: false}
+  log(iter.next());
+
+  // {value: 2, done: false}
+  log(iter.next());
+
+  // {value: 3, done: false}
+  log(iter.next());
+
+  // {value: 100, done: true}
+  log(iter.next());
+
+  // 순회할 때에는 마지막값(done:true) 은 나오지 않는다.
+  for (const a of gen()) log(a);
+</script>
