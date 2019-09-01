@@ -10,11 +10,10 @@
   //   _.length ? f(a, ..._) : (..._) => f(a, ..._);
 
   // 개선한 커리
-  const currySecond = f => (..._) => {
-    return f.length === _.length
+  const currySecond = f => (..._) =>
+    f.length === _.length
       ? f(..._)
       : (...nextArgs) => currySecond(f)(..._, ...nextArgs);
-  };
 
   // medium 문서 코드를 참조
   // https://medium.com/front-end-weekly/javascript-es6-curry-functions-with-practical-examples-6ba2ced003b1
@@ -34,6 +33,6 @@
   const sum = currySecond((a, b, c) => a + b + c);
 
   const test1 = sum(1);
-  const test2 = test1(3);
+  const test2 = test1(4);
   log(test2(5));
 </script>
