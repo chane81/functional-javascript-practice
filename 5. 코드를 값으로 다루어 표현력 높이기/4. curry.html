@@ -1,0 +1,39 @@
+<script src="./fx.js"></script>
+
+<script>
+  // 아래 커리는 문제가 있음
+  // 첫번째 인자만 처음에 넣고 그 다음에 인자는 무조건 다 넣어주어야 문제가 발생하지 않음
+  // 첫번째 인자를 f에 넣고 호출
+  // 두번째 인자를 f에 넣고 호출
+  // 세번째, 네번째..... 인자를 f에 넣고 호출시 에러가 발생
+  // const curry = f => (a, ..._) =>
+  //   _.length ? f(a, ..._) : (..._) => f(a, ..._);
+
+  // 개선한 커리
+  const currySecond = f => (..._) => {
+    return f.length === _.length
+      ? f(..._)
+      : (...nextArgs) => currySecond(f)(..._, ...nextArgs);
+  };
+
+  // medium 문서 코드를 참조
+  // https://medium.com/front-end-weekly/javascript-es6-curry-functions-with-practical-examples-6ba2ced003b1
+  function curryThird(f) {
+    var numOfArgs = f.length;
+
+    //log('arguments:', arguments);
+    //log('numOfArgs', numOfArgs);
+
+    if (arguments.length - 1 < numOfArgs) {
+      return curry.bind(null, ...arguments);
+    } else {
+      return f.apply(null, Array.prototype.slice.call(arguments, 1));
+    }
+  }
+
+  const sum = currySecond((a, b, c) => a + b + c);
+
+  const test1 = sum(1);
+  const test2 = test1(3);
+  log(test2(5));
+</script>
