@@ -1,0 +1,52 @@
+<script src="./fx.js"></script>
+<script>
+	const products = [
+		{
+			name: '반팔티',
+			price: 15000
+		},
+		{
+			name: '긴팔티',
+			price: 20000
+		},
+		{
+			name: '핸드폰케이스',
+			price: 30000
+		},
+		{
+			name: '후드티',
+			price: 35000
+		},
+		{
+			name: '바지',
+			price: 50000
+		}
+	];
+
+	const add = (a, b) => a + b;
+</script>
+
+<script>
+	const go = (...args) =>
+		reduce((a, f) => f(a), args);
+
+	const pipe = (f, ...fs) => (...a) =>
+		go(f(...a), ...fs);
+
+	go(
+		add(20, 1),
+		a => a + 1,
+		a => a + 10,
+		a => a + 100,
+		log
+	);
+
+	const f = pipe(
+		add,
+		a => a + 1,
+		a => a + 10,
+		a => a + 100
+	);
+
+	log(f(20, 1));
+</script>
