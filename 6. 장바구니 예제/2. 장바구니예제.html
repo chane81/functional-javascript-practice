@@ -1,0 +1,92 @@
+<script src="./fx.js"></script>
+<script>
+	const products = [
+		{
+			name: '반팔티',
+			price: 15000,
+			quantity: 1
+		},
+		{
+			name: '긴팔티',
+			price: 20000,
+			quantity: 2
+		},
+		{
+			name: '핸드폰케이스',
+			price: 15000,
+			quantity: 3
+		},
+		{
+			name: '후드티',
+			price: 30000,
+			quantity: 4
+		},
+		{
+			name: '바지',
+			price: 25000,
+			quantity: 5
+		}
+	];
+</script>
+
+<script>
+	const add = (a, b) => a + b;
+	const sum = (f, iter) =>
+		go(iter, map(f), reduce(add));
+
+	const sum_curry = curry((f, iter) =>
+		go(iter, map(f), reduce(add))
+	);
+
+	log(sum(p => p.quantity, products));
+
+	line('개선 전 코드');
+
+	// 총 수량
+	const total_quantity_v1 = pipe(
+		map(p => p.quantity),
+		reduce(add)
+	);
+
+	log(total_quantity_v1(products));
+
+	// 총 가격
+	const total_price_v1 = pipe(
+		map(p => p.price * p.quantity),
+		reduce(add)
+	);
+
+	log(total_price_v1(products));
+
+	line('sum 함수로 추상화 한 개선된 코드');
+
+	// 총 수량
+	const total_quantity_v2 = products =>
+		sum(p => p.quantity, products);
+
+	log(total_quantity_v2(products));
+
+	// 총 가격
+	const total_price_v2 = products =>
+		sum(p => p.price * p.quantity, products);
+
+	log(total_price_v2(products));
+
+	line(
+		'sum 함수를 커링으로 적용하여 좀 더 개선한 코드'
+	);
+
+	// 총 수량
+	const total_quantity_v3 = sum_curry(
+		p => p.quantity
+	);
+
+	log(total_quantity_v3(products));
+
+	// 총 가격
+	const total_price_v3 = sum_curry(
+		p => p.price * p.quantity
+	);
+
+	log(total_price_v3(products));
+</script>
