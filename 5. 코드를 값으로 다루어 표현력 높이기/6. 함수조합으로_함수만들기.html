@@ -1,0 +1,96 @@
+<script src="./fx_curry.js"></script>
+<script>
+	const products = [
+		{
+			name: '반팔티',
+			price: 15000
+		},
+		{
+			name: '긴팔티',
+			price: 20000
+		},
+		{
+			name: '핸드폰케이스',
+			price: 30000
+		},
+		{
+			name: '후드티',
+			price: 35000
+		},
+		{
+			name: '바지',
+			price: 50000
+		}
+	];
+
+	const add = (a, b) => a + b;
+</script>
+
+<script>
+	const go = (...args) =>
+		reduce((a, f) => f(a), args);
+
+	const pipe = (f, ...fs) => (...a) =>
+		go(f(...a), ...fs);
+</script>
+
+<script>
+	line('total_price 미적용');
+
+	const total_price = pipe(
+		map(p => p.price),
+		reduce(add)
+	);
+
+	const base_total_price = predi =>
+		pipe(
+			filter(predi),
+			total_price
+		);
+
+	go(
+		products,
+		filter(p => p.price < 30000),
+		map(p => p.price),
+		reduce(add),
+		log
+	);
+
+	go(
+		products,
+		filter(p => p.price >= 30000),
+		map(p => p.price),
+		reduce(add),
+		log
+	);
+
+	line('total_price 적용');
+
+	go(
+		products,
+		filter(p => p.price < 30000),
+		total_price,
+		log
+	);
+
+	go(
+		products,
+		filter(p => p.price >= 30000),
+		total_price,
+		log
+	);
+
+	line('base_total_price 적용');
+
+	go(
+		products,
+		base_total_price(p => p.price < 30000),
+		log
+	);
+
+	go(
+		products,
+		base_total_price(p => p.price >= 30000),
+		log
+	);
+</script>
