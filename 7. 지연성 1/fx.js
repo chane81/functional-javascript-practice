@@ -13,35 +13,47 @@ const curry = f => (..._) =>
 				curry(f)(..._, ...nextArgs);
 
 // map
-const map = (f, iter) => {
+const map = curry((f, iter) => {
 	let res = [];
 	for (const p of iter) {
 		res.push(f(p));
 	}
 
 	return res;
-};
+});
 
 // filter
-const filter = (f, iter) => {
+const filter = curry((f, iter) => {
 	let res = [];
 	for (const a of iter) {
 		if (f(a)) res.push(a);
 	}
 
 	return res;
-};
+});
 
 // reduce
-const reduce = (f, acc, iter) => {
-	if (!iter) {
-		iter = acc[Symbol.iterator]();
-		acc = iter.next().value;
-	}
+const reduce = curry((f, iter) => {
+	iter = iter[Symbol.iterator]();
 
+	const acc = iter.next().value;
+
+	return reduceOrg(f, acc, iter);
+});
+
+// reduce original
+const reduceOrg = curry((f, acc, iter) => {
 	for (const a of iter) {
 		acc = f(acc, a);
 	}
 
 	return acc;
-};
+});
+
+// go
+const go = (...args) =>
+	reduce((a, f) => f(a), args);
+
+// pipe
+const pipe = (f, ...fs) => (...a) =>
+	go(f(...a), ...fs);

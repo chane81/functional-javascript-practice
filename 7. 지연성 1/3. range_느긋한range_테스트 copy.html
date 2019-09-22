@@ -1,0 +1,48 @@
+<script src="./fx.js"></script>
+
+<script>
+	const add = (a, b) => a + b;
+
+	line('일반적인 range');
+
+	const range = l => {
+		let i = -1;
+		let res = [];
+		while (++i < l) {
+			res.push(i);
+		}
+
+		return res;
+	};
+
+	/*===========================================================*/
+
+	line('느긋한(lazy) range');
+	const L = {};
+
+	L.range = function*(l) {
+		let i = -1;
+
+		while (++i < l) {
+			yield i;
+		}
+	};
+</script>
+
+<script>
+	function test(name, time, f) {
+		console.time(name);
+		while (time--) f();
+		console.timeEnd(name);
+	}
+
+	// 일반 range
+	test('range', 10, () =>
+		reduce(add, range(1000000))
+	);
+
+	// 느긋한(lazy) range
+	test('L.range', 10, () =>
+		reduce(add, L.range(1000000))
+	);
+</script>
